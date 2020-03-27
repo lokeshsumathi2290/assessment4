@@ -2,6 +2,15 @@
 
 We use Terraform to create new EKS from scratch.
 
+## What Does the Code DO
+
+* Create a new VPC
+* Create a new AWS EKS cluster
+* Generate Kube config for the cluster
+* Install external-dns Helm chart
+* Create External Ingress
+* Create Internal Ingress 
+
 ## Prequities
 * Install terraform - v0.12.23 or above - https://learn.hashicorp.com/terraform/getting-started/install.html
 
