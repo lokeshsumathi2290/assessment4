@@ -1,0 +1,3 @@
+environments/*/.terraform/*
+initial-config/*/.terraform/*
+initial-config/*/terraform.tfstate*
