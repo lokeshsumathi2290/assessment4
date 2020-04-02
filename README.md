@@ -9,7 +9,7 @@ We use Terraform to create new EKS from scratch.
 * Generate Kube config for the cluster
 * Install external-dns Helm chart
 * Create External Ingress
-* Create Internal Ingress 
+* Create Internal Ingress
 
 ## Prequities
 * Install terraform - v0.12.23 or above - https://learn.hashicorp.com/terraform/getting-started/install.html
@@ -33,53 +33,41 @@ aws_secret_access_key = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 aws_access_key_id = XXXXXXXXXXXXXXXXX
 aws_secret_access_key = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
+* Valid ACM certificate in that region
 
 ## How to setup a new environment:
 
-* Navigate to below directory
-```
-cd terraform/initial-config
-```
+* Navigate to cloned repo
 
-* Create a new directory with appropriate environment name and navigate inside it eg: prod
+* Run this create_new_env_files.sh like below
 ```
-mkdir prod ; cd prod
+./create_new_env_files.sh dev eu-west-1
 ```
+  * where dev is the new clusters environment name
+  * where eu-west-1 is the region for the EKS cluster to be created
 
-* Copy “s3-dynamo.tf” file to new directory create before
-```
-cp ../dev/s3-dynamo.tf .
-```
-
-* Edit  “s3-dynamo.tf” file change the string “dev” in lines 3, 7 and 8 to our new environment name eg: prod
+* Edit profile name in   initial-config/{env}/s3-dynamo.tf file . Add the AWS profile name eg: dev or prod with respect to ~/.aws/credentials file
 ```
 provider "aws" {
   region = "eu-west-1"
-  profile = "prod"
-}
-
-locals {
-  terra_bucket = "valassis-terraform-state-prod"
-  terra_dynamo = "valassis-terraform-lock-prod"
+  profile = ""
 }
 ```
 
-* Navigate to below dir
+* Navigate to newly created initial config directory  and run below commands one by one
+
 ```
-cd terraform/environments/
+cd initial-config/{env}
+terraform init
+terraform plan
+terraform apply
 ```
 
-* Create new directory with appropriate environment name and copy files as below from “dev-eks” directory
-```
-mkdir prod-eks
-cp dev-eks/main.tf ; cp dev-eks/vars.tf; cp dev-eks/outputs.tf
-cd prod-eks
-```
+* Edit  environments/{env}/vars.tf and fill in all details required for creating a new environment .
 
-* Edit  “vars.tf“ and fill in all details required for creating a new environment .
-
-* Now we are ready to create new AWS EKS cluster with below commands
+* Navigate to newly created environment directory and run below commands one by one
 ```
+cd environments/{env}
 terraform init
 terraform plan
 terraform apply

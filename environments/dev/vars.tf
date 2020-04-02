@@ -1,4 +1,4 @@
-variable "environment" {
+variable "aws_profile" {
   default = "dev"
 }
 
@@ -43,12 +43,12 @@ variable "cluster_version" {
 
 // Domain to add dns entries
 variable "ingress_domain_name_suffix" {
-  default = ""
+  default = "couponbeard.com"
 }
 
 // ACM certificate
 variable "public_ingress_arn" {
-  default = ""
+  default = "arn:aws:acm:eu-west-1:155136788633:certificate/59f610eb-8961-498f-94fe-bc9deede7239"
 }
 
 // DNS zone type (public or private)

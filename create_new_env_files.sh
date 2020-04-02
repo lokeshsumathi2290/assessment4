@@ -20,7 +20,10 @@ if [ -d "${path_environments}/${env}" ] ; then
   echo "${env} environment directory is already present here ${path_environments}/${env}"
 else
   mkdir "${path_environments}/${env}"
-  cp "${path_environments}/dev-eks/main.tf" "${path_environments}/${env}/"
-  cp "${path_environments}/dev-eks/vars.tf" "${path_environments}/${env}/"
-  cp "${path_environments}/dev-eks/outputs.tf" "${path_environments}/${env}/"
+  cp "${path_environments}/dev/main.tf" "${path_environments}/${env}/"
+  cp "${path_environments}/dev/vars.tf" "${path_environments}/${env}/"
+  cp "${path_environments}/dev/outputs.tf" "${path_environments}/${env}/"
+  sed -i -e "s/dev/${env}/g" "${path_environments}/${env}/main.tf"
+  sed -i -e "s/eu-west-1/${region}/g" "${path_environments}/${env}/main.tf"
+  rm "${path_environments}/${env}/main.tf-e"
 fi

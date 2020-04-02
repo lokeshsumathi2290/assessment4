@@ -1,15 +1,19 @@
 provider "aws" {
   region = "eu-west-1"
-  profile = "dev"
+  profile = var.aws_profile
 }
 
 terraform {
   backend "s3" {
-    bucket         = "terraform-state-dev"
-    key            = "dev-eks"
-    dynamodb_table = "terraform-lock-dev"
+    bucket         = "valassis-terraform-state-dev"
+    key            = "dev"
+    dynamodb_table = "valassis-terraform-lock-dev"
     region         = "eu-west-1"
   }
+}
+
+locals {
+  environment = "dev"
 }
 
 module "eks" {
@@ -19,9 +23,9 @@ module "eks" {
    availability_zones     = "${var.availability_zones}"
    private_subs           = "${var.private_subs}"
    public_subs            = "${var.public_subs}"
-   cluster_name           = "${var.environment}-eks"
+   cluster_name           = "${local.environment}-eks"
    cluster_version        = "${var.cluster_version}"
-   environment            = "${var.environment}"
+   environment            = "${local.environment}"
    instance_type          = "${var.instance_type}"
    asg_desired_capacity   = "${var.asg_desired_capacity}"
    asg_max_size           = "${var.asg_max_size}"
