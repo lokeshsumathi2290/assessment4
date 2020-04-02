@@ -5,9 +5,9 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = "valassis-terraform-state-dev"
+    bucket         = "terraform-state-dev"
     key            = "dev"
-    dynamodb_table = "valassis-terraform-lock-dev"
+    dynamodb_table = "terraform-lock-dev"
     region         = "eu-west-1"
   }
 }
