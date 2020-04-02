@@ -4,8 +4,8 @@ provider "aws" {
 }
 
 locals {
-  terra_bucket = "valassis-terraform-state-dev"
-  terra_dynamo = "valassis-terraform-lock-dev"
+  terra_bucket = "terraform-state-dev"
+  terra_dynamo = "terraform-lock-dev"
 }
 
 # terraform state file setup
